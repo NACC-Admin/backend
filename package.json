@@ -1,7 +1,7 @@
 {
-  "name": "masterislam",
+  "name": "nacc-admin",
   "version": "1.0.0",
-  "description": "MasterIslam backend",
+  "description": "NACC Admin backend",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
@@ -48,10 +48,11 @@
         "@babel/env",
         {
           "targets": {
-            "node": "14.8.0"
+            "node": "20.2.0"
           }
         }
       ]
     ]
   }
 }
+
