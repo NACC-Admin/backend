@@ -12,7 +12,7 @@ var cors = require('cors')
 const app = express();
 app.use(bodyParser.json());
 
-const port = process.env.PORT || 9090;
+const port = process.env.PORT || 8080;
 
 //Middleware
 app.use(express.urlencoded({ extended: true}));
@@ -143,4 +143,4 @@ function authController (req, res) {
 }
 
 
-app.listen(port, () => console.log(`Listening on port 9090`+process.env.PORT || 9090));
+app.listen(port, () => console.log(`Listening on port 9090`+process.env.PORT || 8080));
