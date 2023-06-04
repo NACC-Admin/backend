@@ -22,7 +22,7 @@ var cors = require('cors');
 
 const app = (0, _express.default)();
 app.use(_bodyParser.default.json());
-const port = process.env.PORT || 9090; //Middleware
+const port = process.env.PORT || 8080; //Middleware
 
 app.use(_express.default.urlencoded({
   extended: true
@@ -124,5 +124,5 @@ function authController(req, res) {
   }) => res.set(headers).status(statusCode).send(data)).catch(e => res.status(500).end());
 }
 
-app.listen(port, () => console.log(`Listening on port 9090` + process.env.PORT || 9090));
+app.listen(port, () => console.log(`Listening on port 9090` + process.env.PORT || 8080));
 //# sourceMappingURL=index.js.map
