@@ -31,15 +31,8 @@ export default function makeSubscribersEndpointHandler({subscribersQuery}){
     }
 
     async function getSubscribers (httpRequest) {
-
-
       const { id } = httpRequest.queryParams || {}
-      // const { mid } = httpRequest.queryParams || {} 
-      // const { memid } = httpRequest.queryParams || {} 
-      // const { m_id, mem_id } = httpRequest.queryParams || {} 
       const { max, before, after } = httpRequest.queryParams || {}
-      
-      
 
       if (id !== undefined ){
         const result = await subscribersQuery.findById({ id })
@@ -67,7 +60,6 @@ export default function makeSubscribersEndpointHandler({subscribersQuery}){
       }
         
     }
-    
 
     async function postSubscribers (httpRequest) {
         let subInfo = httpRequest.body
@@ -91,28 +83,14 @@ export default function makeSubscribersEndpointHandler({subscribersQuery}){
     
         try {
           
-          if (httpRequest.path == '/follower/update-member'){
-            const subscriber = makeSubscribers(subInfo)
-           
-            const result = await subscribersQuery.updateSub(subscriber);
-            return {
-                headers: {
-                  'Content-Type': 'application/json'
-                },
-                statusCode: 201,
-                data: JSON.stringify(result)
-              }
-          }
-          else {
-            const subscriber = makeSubscribers(subInfo)
-            const result = await subscribersQuery.add(subscriber)
-            return {
-              headers: {
-                'Content-Type': 'application/json'
-              },
-              statusCode: 201,
-              data: JSON.stringify(result)
-            }
+          const subscriber = makeSubscribers(subInfo)
+          const result = await subscribersQuery.add(subscriber)
+          return {
+            headers: {
+              'Content-Type': 'application/json'
+            },
+            statusCode: 201,
+            data: JSON.stringify(result)
           }
           
         } catch (e) {
@@ -153,8 +131,9 @@ export default function makeSubscribersEndpointHandler({subscribersQuery}){
     }
 
     try {
-      const subscriber = makeSubscriber(subInfo);
-      const result = await subscriberQuery.update(subscriber)
+      
+      const subscriber = makeSubscribers(subInfo);
+      const result = await subscribersQuery.update(subscriber)
       return {
         headers: {
           'Content-Type': 'application/json'
@@ -178,12 +157,9 @@ export default function makeSubscribersEndpointHandler({subscribersQuery}){
 
   async function deleteSubscribers (httpRequest) {
     const { id } = httpRequest.queryParams || {}
-
-   // const { customer_id } = httpRequest.pathParams || {}
-
      
     try {
-      const result = await subscriberQuery.deleteById({ id })
+      const result = await subscribersQuery.deleteById({ id })
       return {
         headers: {
           'Content-Type': 'application/json'

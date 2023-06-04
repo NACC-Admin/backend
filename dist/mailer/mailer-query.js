@@ -47,8 +47,6 @@ function makeMailerQuery({
     mailerId,
     ...mailer
   }) {
-    console.log("Add query called");
-    console.log(mailer._id);
     const db = await database;
 
     if (mailerId) {
@@ -68,7 +66,6 @@ function makeMailerQuery({
 
       throw mongoError;
     });
-    console.log("After message query");
     const transporter = nodemailer.createTransport({
       service: 'gmail',
       auth: {

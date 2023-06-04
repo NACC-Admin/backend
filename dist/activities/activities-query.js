@@ -29,7 +29,6 @@ function makeActivitiesQuery({
     before,
     after
   } = {}) {
-    console.log("get activities endpoint called");
     const db = await database;
     const query = {};
 

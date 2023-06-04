@@ -74,13 +74,11 @@ function makeStaffEndpointHandler({
         data: JSON.stringify(result)
       };
     } else {
-      console.log("Before result");
       const result = await staffQuery.getStaff({
         max,
         before,
         after
       });
-      console.log("After result");
       return {
         headers: {
           'Content-Type': 'application/json'
@@ -114,9 +112,9 @@ function makeStaffEndpointHandler({
 
     try {
       if (httpRequest.path == '/staff/auth') {
+        console.log("Auth post endpoint called");
         const staff = (0, _staff.default)(staffInfo);
         const result = await staffQuery.auth(staff);
-        console.log(result);
         return {
           headers: {
             'Content-Type': 'application/json'
@@ -145,6 +143,45 @@ function makeStaffEndpointHandler({
           data: JSON.stringify(result)
         };
       }
+    } catch (e) {
+      return (0, _httpError.default)({
+        errorMessage: e.message,
+        statusCode: e instanceof _errors.UniqueConstraintError ? 409 : e instanceof _errors.InvalidPropertyError || e instanceof _errors.RequiredParameterError ? 400 : 500
+      });
+    }
+  }
+
+  async function updateStaff(httpRequest) {
+    let staffInfo = httpRequest.body;
+
+    if (!staffInfo) {
+      return (0, _httpError.default)({
+        statusCode: 400,
+        errorMessage: 'Bad request. No POST body.'
+      });
+    }
+
+    if (typeof httpRequest.body === 'string') {
+      try {
+        staffInfo = JSON.parse(staffInfo);
+      } catch {
+        return (0, _httpError.default)({
+          statusCode: 400,
+          errorMessage: 'Bad request. POST body must be valid JSON.'
+        });
+      }
+    }
+
+    try {
+      const staff = (0, _staff.default)(staffInfo);
+      const result = await staffQuery.update(staff);
+      return {
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        statusCode: 201,
+        data: JSON.stringify(result)
+      };
     } catch (e) {
       return (0, _httpError.default)({
         errorMessage: e.message,

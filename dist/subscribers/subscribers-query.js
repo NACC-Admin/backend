@@ -16,7 +16,7 @@ function makeSubscribersQuery({
 }) {
   return Object.freeze({
     add,
-    updateSubscriber,
+    update,
     findById,
     getSubscribers,
     deleteById
@@ -76,7 +76,7 @@ function makeSubscribersQuery({
     });
   }
 
-  async function updateSubscriber({
+  async function update({
     id,
     ...subscriber
   }) {
@@ -140,19 +140,12 @@ function makeSubscribersQuery({
     const db = await database;
     const {
       result
-    } = await db.collection('Subscribers').deleteOne({
+    } = await db.collection('Subscribers').deleteMany({
       "_id": db.makeId(id)
     });
-
-    if (result.deletedCount > 0) {
-      return {
-        status: "Success"
-      };
-    } else {
-      return {
-        status: "Error"
-      };
-    }
+    return {
+      success: result.n
+    };
   }
 
   function documentToSubscribers({

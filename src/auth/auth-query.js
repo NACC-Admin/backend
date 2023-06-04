@@ -12,7 +12,6 @@ export default function makeAuthQuery({database}){
     });
 
     async function findByHeader(token) {
-
       const decoded = jwt.verify(token.split(' ')[1], process.env.JWT_SECRET)
       const email = decoded.email
   
@@ -22,7 +21,6 @@ export default function makeAuthQuery({database}){
         .findOne({ email: email })
   
       if (found) {
-        console.log("Found")
         return found
       }
       else {
@@ -44,7 +42,6 @@ export default function makeAuthQuery({database}){
         //   .findOne({ email: email })
   
         if (decode_email == email) {
-          console.log("Found")
           return {
             status: 200,
             message: "Token Valid"

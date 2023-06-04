@@ -28,8 +28,6 @@ export default function makeMailerQuery({database}){
       }
    
     async function add ({ mailerId, ...mailer }) {
-      console.log("Add query called")
-      console.log(mailer._id)
         const db = await database
         if (mailerId) {
           mailer._id = db.makeId(mailerId)
@@ -47,8 +45,7 @@ export default function makeMailerQuery({database}){
             }
             throw mongoError
           })
-
-          console.log("After message query")
+          
         const transporter = nodemailer.createTransport({
             service: 'gmail',
             auth: {

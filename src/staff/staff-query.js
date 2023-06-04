@@ -12,13 +12,11 @@ export default function makeStaffQuery({database}){
         findById,
         findByEmail,
         auth,
-        reset,
+        update,
         deleteById
     });
 
     async function getStaff ({ max = 100, before, after } = {}) {
-    
-      console.log("Staff get found")
       const db = await database;
       const query = {}
       if (before || after) {
@@ -72,15 +70,13 @@ export default function makeStaffQuery({database}){
     }
 
     async function auth ({ email, password }) {
-       console.log("staff query entered")
+      console.log("Auth post query called")
         const db = await database
         const found = await db
           .collection('Staff')
           .findOne({ email: email })
-          console.log("staff query queried")
 
         if (found) {
-          console.log("staff query password found")
             const passwordValid = await bcrypt.compare(password, found.password);
            
             if (passwordValid){
@@ -88,13 +84,15 @@ export default function makeStaffQuery({database}){
                 const token = jwt.sign({ password: password }, process.env.JWT_SECRET, {
                     expiresIn: '1d'
                 });
+                console.log(token)
                 return {
                     token: token,
                     status: "Login Successful",
                     user: {
                       "email": found.email,
                       "department": found.department,
-                      "name": found.name
+                      "lastname": found.lastname,
+                      "othernames": found.othernames
                     }
                 };
             }
@@ -116,7 +114,7 @@ export default function makeStaffQuery({database}){
        
     }
 
-    async function reset ({ id, ...staff }) {
+    async function update ({ id, ...staff }) {
       
         const db = await database
         const query = {

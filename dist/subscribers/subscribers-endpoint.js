@@ -41,10 +41,7 @@ function makeSubscribersEndpointHandler({
   async function getSubscribers(httpRequest) {
     const {
       id
-    } = httpRequest.queryParams || {}; // const { mid } = httpRequest.queryParams || {} 
-    // const { memid } = httpRequest.queryParams || {} 
-    // const { m_id, mem_id } = httpRequest.queryParams || {} 
-
+    } = httpRequest.queryParams || {};
     const {
       max,
       before,
@@ -100,27 +97,15 @@ function makeSubscribersEndpointHandler({
     }
 
     try {
-      if (httpRequest.path == '/follower/update-member') {
-        const subscriber = (0, _subscribers.default)(subInfo);
-        const result = await subscribersQuery.updateSub(subscriber);
-        return {
-          headers: {
-            'Content-Type': 'application/json'
-          },
-          statusCode: 201,
-          data: JSON.stringify(result)
-        };
-      } else {
-        const subscriber = (0, _subscribers.default)(subInfo);
-        const result = await subscribersQuery.add(subscriber);
-        return {
-          headers: {
-            'Content-Type': 'application/json'
-          },
-          statusCode: 201,
-          data: JSON.stringify(result)
-        };
-      }
+      const subscriber = (0, _subscribers.default)(subInfo);
+      const result = await subscribersQuery.add(subscriber);
+      return {
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        statusCode: 201,
+        data: JSON.stringify(result)
+      };
     } catch (e) {
       return (0, _httpError.default)({
         errorMessage: e.message,
@@ -151,8 +136,8 @@ function makeSubscribersEndpointHandler({
     }
 
     try {
-      const subscriber = makeSubscriber(subInfo);
-      const result = await subscriberQuery.update(subscriber);
+      const subscriber = (0, _subscribers.default)(subInfo);
+      const result = await subscribersQuery.update(subscriber);
       return {
         headers: {
           'Content-Type': 'application/json'
@@ -171,10 +156,10 @@ function makeSubscribersEndpointHandler({
   async function deleteSubscribers(httpRequest) {
     const {
       id
-    } = httpRequest.queryParams || {}; // const { customer_id } = httpRequest.pathParams || {}
+    } = httpRequest.queryParams || {};
 
     try {
-      const result = await subscriberQuery.deleteById({
+      const result = await subscribersQuery.deleteById({
         id
       });
       return {

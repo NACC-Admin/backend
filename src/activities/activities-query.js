@@ -14,7 +14,6 @@ export default function makeActivitiesQuery({database}){
 
     async function getActivities ({ max = 100, before, after } = {}) {
 
-      console.log(("get activities endpoint called"))
         const db = await database;
         const query = {}
         if (before || after) {

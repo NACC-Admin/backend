@@ -18,11 +18,6 @@ var _adaptRequest = _interopRequireDefault(require("./helpers/adapt-request"));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-// import handleMessagesRequest from './messages'
-// import handleTrendingReactRequest from './trending-react'
-// import handleTrendingReactCommentRequest from './trending-react-comment'
-// import handleFollowerRequest from './followers'
-// import handleContactRequest from './contact'
 var cors = require('cors');
 
 const app = (0, _express.default)();
@@ -53,8 +48,8 @@ function authenticate(req, res, next) {
   });
 }
 
-app.post('/sendmail', sendmailController);
-app.get('/sendmail', sendmailController);
+app.post('/sendmail', authenticate, sendmailController);
+app.get('/sendmail', authenticate, sendmailController);
 
 function sendmailController(req, res) {
   const httpRequest = (0, _adaptRequest.default)(req);
@@ -65,11 +60,13 @@ function sendmailController(req, res) {
   }) => res.set(headers).status(statusCode).send(data)).catch(e => res.status(500).end());
 }
 
-app.all('/staff', staffController);
+app.all('/staff', authenticate, staffController);
+app.put('/staff', authenticate, staffController);
 app.post('/staff/add', staffController);
 app.post('/staff/auth', staffController);
 app.post('/staff/reset', staffController);
-app.get('/staff/:id', staffController);
+app.get('/staff/:id', staffController); // app.delete('/staff/?id=:id', staffController);
+
 app.get('/staff/?id=:id', staffController);
 app.get('/staff/find/?email=:email', staffController);
 
@@ -98,10 +95,11 @@ function activitiesController(req, res) {
   }) => res.set(headers).status(statusCode).send(data)).catch(e => res.status(500).end());
 }
 
-app.all('/subscriber', authenticate, subscriberController);
+app.all('/subscriber', subscriberController);
 app.post('/subscriber/add', subscriberController);
+app.put('/subscriber', subscriberController);
 app.post('/subscriber/update', subscriberController);
-app.delete('/subscriber/:id', subscriberController);
+app.delete('/subscriber?id=:id', subscriberController);
 app.get('/subscriber/:id', subscriberController);
 app.get('/subscriber?id=:id', subscriberController);
 

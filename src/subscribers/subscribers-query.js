@@ -4,7 +4,7 @@ import { UniqueConstraintError } from '../helpers/errors'
 export default function makeSubscribersQuery({database}){
     return Object.freeze({
         add,
-        updateSubscriber,
+        update,
         findById,
         getSubscribers,
         deleteById
@@ -61,7 +61,7 @@ export default function makeSubscribersQuery({database}){
 
     }
 
-  async function updateSubscriber ({ id, ...subscriber}) {
+  async function update ({ id, ...subscriber}) {
       const db = await database
       const query = {
         _id: db.makeId(id)
@@ -113,20 +113,15 @@ export default function makeSubscribersQuery({database}){
     return null
   }
 
+
   async function deleteById ({ id }) {
     const db = await database
 
-    const { result } = await db.collection('Subscribers').deleteOne({"_id": db.makeId(id)})
-    if (result.deletedCount > 0){
-      return {
-        status: "Success"
-      }
+    const { result } = await db.collection('Subscribers').deleteMany({"_id": db.makeId(id)})
+    return {
+      success: result.n
     }
-    else {
-      return {
-        status: "Error"
-      }
-    }
+    
   }
 
   function documentToSubscribers ({ _id: id, ...doc }) {

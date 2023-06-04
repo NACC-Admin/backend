@@ -56,10 +56,8 @@ function makeActivitiesEndpointHandler({
       before,
       after
     } = httpRequest.queryParams || {};
-    console.log("Activities get called");
 
     if (dday !== undefined && dmonth !== undefined && dyear !== undefined) {
-      console.log("Activities dday, dmonth, dyear");
       const day = dday;
       const month = dmonth;
       const year = dyear;
@@ -76,7 +74,6 @@ function makeActivitiesEndpointHandler({
         data: JSON.stringify(result)
       };
     } else if (month !== undefined) {
-      console.log("Activities month");
       const result = await activitiesQuery.findByMonth({
         month
       });
@@ -88,7 +85,6 @@ function makeActivitiesEndpointHandler({
         data: JSON.stringify(result)
       };
     } else if (year !== undefined) {
-      console.log("Activities year");
       const result = await activitiesQuery.findByYear({
         year
       });
@@ -100,7 +96,6 @@ function makeActivitiesEndpointHandler({
         data: JSON.stringify(result)
       };
     } else if (id !== undefined) {
-      console.log("Activities id");
       const result = await activitiesQuery.findById({
         id
       });
@@ -112,7 +107,6 @@ function makeActivitiesEndpointHandler({
         data: JSON.stringify(result)
       };
     } else {
-      console.log("Activities else");
       const result = await activitiesQuery.getActivities({
         max,
         before,

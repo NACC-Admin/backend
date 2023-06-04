@@ -33,10 +33,8 @@ export default function makeActivitiesEndpointHandler({activitiesQuery}){
       const { year } = httpRequest.queryParams || {}
       const { dday, dmonth, dyear } = httpRequest.queryParams || {} //category and password
       const { max, before, after } = httpRequest.queryParams || {}
-      console.log("Activities get called")
       
       if (dday !== undefined && dmonth !== undefined && dyear !== undefined){
-        console.log("Activities dday, dmonth, dyear")
         const day = dday;
         const month = dmonth;
         const year = dyear
@@ -53,7 +51,6 @@ export default function makeActivitiesEndpointHandler({activitiesQuery}){
 
       }
       else if (month !== undefined ){
-        console.log("Activities month")
         const result = await activitiesQuery.findByMonth({ month })
 
         return {
@@ -67,7 +64,6 @@ export default function makeActivitiesEndpointHandler({activitiesQuery}){
       }
 
       else if (year !== undefined ){
-        console.log("Activities year")
         const result = await activitiesQuery.findByYear({ year })
 
         return {
@@ -81,7 +77,6 @@ export default function makeActivitiesEndpointHandler({activitiesQuery}){
       }
       
       else if (id !== undefined ){
-        console.log("Activities id")
         const result = await activitiesQuery.findById({ id })
 
         return {
@@ -94,7 +89,6 @@ export default function makeActivitiesEndpointHandler({activitiesQuery}){
 
       }
       else {
-        console.log("Activities else")
         const result = await activitiesQuery.getActivities({ max, before, after })
 
         return {

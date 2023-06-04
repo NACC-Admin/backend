@@ -26,6 +26,7 @@ function makeAuthQuery({
   });
 
   async function findByHeader(token) {
+    console.log("token: " + token);
     const decoded = jwt.verify(token.split(' ')[1], process.env.JWT_SECRET);
     const email = decoded.email;
     const db = await database;
@@ -34,7 +35,6 @@ function makeAuthQuery({
     });
 
     if (found) {
-      console.log("Found");
       return found;
     } else {
       return "error";
@@ -50,7 +50,6 @@ function makeAuthQuery({
       //   .findOne({ email: email })
 
       if (decode_email == email) {
-        console.log("Found");
         return {
           status: 200,
           message: "Token Valid"

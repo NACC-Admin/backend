@@ -60,11 +60,7 @@ export default function makeStaffEndpointHandler({staffQuery}){
 
       }
       else {
-        console.log("Before result")
         const result = await staffQuery.getStaff({ max, before, after })
-
-        console.log("After result")
-
         return {
           headers: {
             'Content-Type': 'application/json'
@@ -74,7 +70,6 @@ export default function makeStaffEndpointHandler({staffQuery}){
         }
         
       }
-
     }
 
     async function postStaff (httpRequest) {
@@ -100,9 +95,9 @@ export default function makeStaffEndpointHandler({staffQuery}){
         try {
            
           if (httpRequest.path == '/staff/auth'){
+            console.log("Auth post endpoint called")
             const staff = makeStaff(staffInfo);
             const result = await staffQuery.auth(staff);
-            console.log(result)
             return {
                 headers: {
                   'Content-Type': 'application/json'
@@ -148,6 +143,53 @@ export default function makeStaffEndpointHandler({staffQuery}){
                   : 500
           })
         }
+    }
+
+    async function updateStaff(httpRequest) {
+    
+      let staffInfo = httpRequest.body
+      
+      if (!staffInfo) {
+        return makeHttpError({
+          statusCode: 400,
+          errorMessage: 'Bad request. No POST body.'
+        })
+      }
+  
+      if (typeof httpRequest.body === 'string') {
+        try {
+          staffInfo = JSON.parse(staffInfo)
+        } catch {
+          return makeHttpError({
+            statusCode: 400,
+            errorMessage: 'Bad request. POST body must be valid JSON.'
+          })
+        }
+      }
+  
+      try {
+        
+        const staff = makeStaff(staffInfo);
+        const result = await staffQuery.update(staff)
+        return {
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          statusCode: 201,
+          data: JSON.stringify(result)
+        }
+      } catch (e) {
+        return makeHttpError({
+          errorMessage: e.message,
+          statusCode:
+            e instanceof UniqueConstraintError
+              ? 409
+              : e instanceof InvalidPropertyError ||
+                e instanceof RequiredParameterError
+                ? 400
+                : 500
+        })
+      }
     }
 
     async function deleteStaff (httpRequest) {

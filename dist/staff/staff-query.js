@@ -26,7 +26,7 @@ function makeStaffQuery({
     findById,
     findByEmail,
     auth,
-    reset,
+    update,
     deleteById
   });
 
@@ -35,7 +35,6 @@ function makeStaffQuery({
     before,
     after
   } = {}) {
-    console.log("Staff get found");
     const db = await database;
     const query = {};
 
@@ -97,15 +96,13 @@ function makeStaffQuery({
     email,
     password
   }) {
-    console.log("staff query entered");
+    console.log("Auth post query called");
     const db = await database;
     const found = await db.collection('Staff').findOne({
       email: email
     });
-    console.log("staff query queried");
 
     if (found) {
-      console.log("staff query password found");
       const passwordValid = await bcrypt.compare(password, found.password);
 
       if (passwordValid) {
@@ -114,13 +111,15 @@ function makeStaffQuery({
         }, process.env.JWT_SECRET, {
           expiresIn: '1d'
         });
+        console.log(token);
         return {
           token: token,
           status: "Login Successful",
           user: {
             "email": found.email,
             "department": found.department,
-            "name": found.name
+            "lastname": found.lastname,
+            "othernames": found.othernames
           }
         };
       } else {
@@ -137,7 +136,7 @@ function makeStaffQuery({
     }
   }
 
-  async function reset({
+  async function update({
     id,
     ...staff
   }) {
