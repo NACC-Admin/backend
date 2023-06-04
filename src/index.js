@@ -40,8 +40,8 @@ function authenticate (req, res, next) {
 }
 
 
-app.post('/sendmail', authenticate, sendmailController);
-app.get('/sendmail', authenticate, sendmailController);
+app.post('/sendmail', sendmailController);
+app.get('/sendmail', sendmailController);
 
 function sendmailController (req, res) {
   const httpRequest = adaptRequest(req)
@@ -56,15 +56,15 @@ function sendmailController (req, res) {
 }
 
 
-app.all('/staff', authenticate, staffController);
-app.put('/staff', authenticate, staffController);
+app.all('/staff', staffController);
+app.put('/staff', staffController);
 app.post('/staff/add', authenticate, staffController);
 app.post('/staff/auth', staffController);
 // app.post('/staff/reset', staffController);
-app.get('/staff/:id', authenticate, staffController);
+app.get('/staff/:id', staffController);
 // app.delete('/staff/?id=:id', staffController);
-app.get('/staff/?id=:id', authenticate, staffController);
-app.get('/staff/find/?email=:email', authenticate, staffController);
+app.get('/staff/?id=:id', staffController);
+app.get('/staff/find/?email=:email', staffController);
 
 function staffController (req, res) {
     const httpRequest = adaptRequest(req)
@@ -80,11 +80,11 @@ function staffController (req, res) {
 
 
 
-app.get('/activities', authenticate, activitiesController);
-app.post('/activities/add', authenticate, activitiesController);
-app.delete('/activities/:id', authenticate, activitiesController);
-app.get('/activities?month=:month', authenticate, activitiesController);
-app.get('/activities?year=:year', authenticate, activitiesController);
+app.get('/activities', activitiesController);
+app.post('/activities/add', activitiesController);
+app.delete('/activities/:id', activitiesController);
+app.get('/activities?month=:month', activitiesController);
+app.get('/activities?year=:year', activitiesController);
 
 
 function activitiesController (req, res) {
@@ -103,13 +103,13 @@ function activitiesController (req, res) {
 
 
 
-app.all('/subscriber', authenticate, subscriberController);
-app.post('/subscriber/add', authenticate, subscriberController);
-app.put('/subscriber', authenticate, subscriberController);
-app.post('/subscriber/update', authenticate, subscriberController);
-app.delete('/subscriber?id=:id', authenticate, subscriberController);
-app.get('/subscriber/:id', authenticate, subscriberController);
-app.get('/subscriber?id=:id', authenticate, subscriberController);
+app.all('/subscriber', subscriberController);
+app.post('/subscriber/add', subscriberController);
+app.put('/subscriber', subscriberController);
+app.post('/subscriber/update', subscriberController);
+app.delete('/subscriber?id=:id', subscriberController);
+app.get('/subscriber/:id', subscriberController);
+app.get('/subscriber?id=:id', subscriberController);
 
 function subscriberController (req, res) {
   
