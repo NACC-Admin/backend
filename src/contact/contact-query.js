@@ -9,7 +9,7 @@ export default function makeContactQuery({database}){
         deleteById
     });
 
-    async function getContact ({ max = 100, before, after } = {}) {
+    async function getContact ({ max = 200000, before, after } = {}) {
       
         const db = await database;
         const query = {};

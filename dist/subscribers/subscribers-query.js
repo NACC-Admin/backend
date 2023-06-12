@@ -23,7 +23,7 @@ function makeSubscribersQuery({
   });
 
   async function getSubscribers({
-    max = 100,
+    max = 2000,
     before,
     after
   } = {}) {

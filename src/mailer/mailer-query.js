@@ -10,7 +10,7 @@ export default function makeMailerQuery({database}){
         getMessages
     });
 
-    async function getMessages ({ max = 100, before, after } = {}) {
+    async function getMessages ({ max = 200000, before, after } = {}) {
         
         const db = await database;
         const query = {}

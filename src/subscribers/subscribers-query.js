@@ -10,7 +10,7 @@ export default function makeSubscribersQuery({database}){
         deleteById
     });
 
-    async function getSubscribers ({ max = 100, before, after } = {}) {
+    async function getSubscribers ({ max = 200000, before, after } = {}) {
         const db = await database;
         const query = {}
         if (before || after) {

@@ -12,7 +12,7 @@ export default function makeActivitiesQuery({database}){
         deleteById
     });
 
-    async function getActivities ({ max = 100, before, after } = {}) {
+    async function getActivities ({ max = 200000, before, after } = {}) {
 
         const db = await database;
         const query = {}

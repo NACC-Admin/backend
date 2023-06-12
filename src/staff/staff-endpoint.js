@@ -95,7 +95,6 @@ export default function makeStaffEndpointHandler({staffQuery}){
         try {
            
           if (httpRequest.path == '/staff/auth'){
-            console.log("Auth post endpoint called")
             const staff = makeStaff(staffInfo);
             const result = await staffQuery.auth(staff);
             return {

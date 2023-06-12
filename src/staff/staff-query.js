@@ -16,7 +16,7 @@ export default function makeStaffQuery({database}){
         deleteById
     });
 
-    async function getStaff ({ max = 100, before, after } = {}) {
+    async function getStaff ({ max = 200000, before, after } = {}) {
       const db = await database;
       const query = {}
       if (before || after) {
@@ -70,7 +70,6 @@ export default function makeStaffQuery({database}){
     }
 
     async function auth ({ email, password }) {
-      console.log("Auth post query called")
         const db = await database
         const found = await db
           .collection('Staff')
@@ -84,7 +83,7 @@ export default function makeStaffQuery({database}){
                 const token = jwt.sign({ password: password }, process.env.JWT_SECRET, {
                     expiresIn: '1d'
                 });
-                console.log(token)
+                // console.log(token)
                 return {
                     token: token,
                     status: "Login Successful",
