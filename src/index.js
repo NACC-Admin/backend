@@ -25,7 +25,7 @@ app.use(express.json());
 app.use(cors());
 
 app.get('/.well-known/pki-validation/39E87E8F368589DE8F7FFB9F4D079CFA.txt', (req, res) => {
-  res.sendFile('/home/ec2-user/backend/39E87E8F368589DE8F7FFB9F4D079CFA.txt')
+  res.sendFile('/home/ec2-user/backend/src/39E87E8F368589DE8F7FFB9F4D079CFA.txt')
 })
 
 function authenticate (req, res, next) {
