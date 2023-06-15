@@ -25,7 +25,7 @@ function makeActivitiesQuery({
   });
 
   async function getActivities({
-    max = 100,
+    max = 200000,
     before,
     after
   } = {}) {

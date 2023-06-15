@@ -22,7 +22,7 @@ function makeContactQuery({
   });
 
   async function getContact({
-    max = 100,
+    max = 200000,
     before,
     after
   } = {}) {

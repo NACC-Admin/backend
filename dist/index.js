@@ -22,13 +22,27 @@ var cors = require('cors');
 
 const app = (0, _express.default)();
 app.use(_bodyParser.default.json());
+
+const fs = require('fs');
+
+const https = require('https');
+
+const cert = fs.readFileSync('src/certificate.crt');
+const key = fs.readFileSync('src/private.key');
 const port = process.env.PORT || 9090; //Middleware
 
 app.use(_express.default.urlencoded({
   extended: true
 }));
 app.use(_express.default.json());
-app.use(cors());
+app.use(cors()); // app.get('/.well-known/pki-validation/39E87E8F368589DE8F7FFB9F4D079CFA.txt', (req, res) => {
+//   res.sendFile('/home/ec2-user/backend/src/39E87E8F368589DE8F7FFB9F4D079CFA.txt')
+// })
+
+const credentials = {
+  key,
+  cert
+};
 
 function authenticate(req, res, next) {
   const httpRequest = (0, _adaptRequest.default)(req);
@@ -38,7 +52,7 @@ function authenticate(req, res, next) {
     if (statusCode == 200) {
       next();
     } else {
-      console.log("Unauthorized access");
+      // console.log("Unauthorized access")
       res.json({
         message: "Unauthorized access"
       });
@@ -125,4 +139,6 @@ function authController(req, res) {
 }
 
 app.listen(port, () => console.log(`Listening on port 9090` + process.env.PORT || 9090));
+const httpServer = https.createServer(credentials, app);
+httpServer.listen(9443);
 //# sourceMappingURL=index.js.map

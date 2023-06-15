@@ -31,7 +31,7 @@ function makeStaffQuery({
   });
 
   async function getStaff({
-    max = 100,
+    max = 200000,
     before,
     after
   } = {}) {
@@ -96,7 +96,6 @@ function makeStaffQuery({
     email,
     password
   }) {
-    console.log("Auth post query called");
     const db = await database;
     const found = await db.collection('Staff').findOne({
       email: email
@@ -110,8 +109,8 @@ function makeStaffQuery({
           password: password
         }, process.env.JWT_SECRET, {
           expiresIn: '1d'
-        });
-        console.log(token);
+        }); // console.log(token)
+
         return {
           token: token,
           status: "Login Successful",

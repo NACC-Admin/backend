@@ -23,7 +23,7 @@ function makeMailerQuery({
   });
 
   async function getMessages({
-    max = 100,
+    max = 200000,
     before,
     after
   } = {}) {

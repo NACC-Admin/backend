@@ -15,8 +15,9 @@ app.use(bodyParser.json());
 const fs = require('fs')
 const https = require('https')
 
-const key = fs.readFileSync('private.key')
-const cert = fs.readFileSync('certificate.crt')
+
+const cert = fs.readFileSync('src/certificate.crt')
+const key = fs.readFileSync('src/private.key')
 
 const port = process.env.PORT || 9090;
 
