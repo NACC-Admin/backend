@@ -13,8 +13,10 @@ const app = express();
 app.use(bodyParser.json());
 
 const fs = require('fs')
+const https = require('https')
 
-// const file = fs.readFileSync('./39E87E8F368589DE8F7FFB9F4D079CFA.txt')
+const key = fs.readFileSync('private.key')
+const cert = fs.readFileSync('certificate.crt')
 
 const port = process.env.PORT || 9090;
 
@@ -24,9 +26,14 @@ app.use(express.json());
 
 app.use(cors());
 
-app.get('/.well-known/pki-validation/39E87E8F368589DE8F7FFB9F4D079CFA.txt', (req, res) => {
-  res.sendFile('/home/ec2-user/backend/src/39E87E8F368589DE8F7FFB9F4D079CFA.txt')
-})
+// app.get('/.well-known/pki-validation/39E87E8F368589DE8F7FFB9F4D079CFA.txt', (req, res) => {
+//   res.sendFile('/home/ec2-user/backend/src/39E87E8F368589DE8F7FFB9F4D079CFA.txt')
+// })
+
+const credentials = {
+  key,
+  cert
+}
 
 function authenticate (req, res, next) {
   const httpRequest = adaptRequest(req)
@@ -38,7 +45,7 @@ function authenticate (req, res, next) {
           next();
         } 
         else {
-          console.log("Unauthorized access")
+          // console.log("Unauthorized access")
           res.json({message: "Unauthorized access"})
         }
 
@@ -151,3 +158,6 @@ function authController (req, res) {
 
 
 app.listen(port, () => console.log(`Listening on port 9090`+process.env.PORT || 9090));
+
+const httpServer = https.createServer(credentials, app);
+httpServer.listen(9443)
