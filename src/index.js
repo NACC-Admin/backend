@@ -12,6 +12,10 @@ var cors = require('cors')
 const app = express();
 app.use(bodyParser.json());
 
+const fs = require('fs')
+
+// const file = fs.readFileSync('./39E87E8F368589DE8F7FFB9F4D079CFA.txt')
+
 const port = process.env.PORT || 9090;
 
 //Middleware
@@ -20,6 +24,9 @@ app.use(express.json());
 
 app.use(cors());
 
+app.get('/.well-known/pki-validation/39E87E8F368589DE8F7FFB9F4D079CFA.txt', (req, res) => {
+  res.sendFile('/home/ec2-user/backend/39E87E8F368589DE8F7FFB9F4D079CFA.txt')
+})
 
 function authenticate (req, res, next) {
   const httpRequest = adaptRequest(req)
