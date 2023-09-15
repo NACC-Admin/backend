@@ -27,9 +27,9 @@ app.use(express.json());
 
 app.use(cors());
 
-app.get('/.well-known/pki-validation/E6FE7FC5B510F05015C6F8BEC821E3A6.txt', (req, res) => {
-  res.sendFile('/home/ec2-user/backend/src/E6FE7FC5B510F05015C6F8BEC821E3A6.txt')
-})
+// app.get('/.well-known/pki-validation/E6FE7FC5B510F05015C6F8BEC821E3A6.txt', (req, res) => {
+//   res.sendFile('/home/ec2-user/backend/src/E6FE7FC5B510F05015C6F8BEC821E3A6.txt')
+// })
 
 const credentials = {
   key,
