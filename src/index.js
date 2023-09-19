@@ -118,7 +118,7 @@ function activitiesController (req, res) {
 
 
 
-
+app.get('/subscriber', subscriberController);
 app.post('/subscriber/add', subscriberController);
 app.put('/subscriber', subscriberController);
 app.post('/subscriber/update', subscriberController);

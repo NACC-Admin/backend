@@ -35,10 +35,10 @@ app.use(_express.default.urlencoded({
   extended: true
 }));
 app.use(_express.default.json());
-app.use(cors());
-app.get('/.well-known/pki-validation/E6FE7FC5B510F05015C6F8BEC821E3A6.txt', (req, res) => {
-  res.sendFile('/home/ec2-user/backend/src/E6FE7FC5B510F05015C6F8BEC821E3A6.txt');
-});
+app.use(cors()); // app.get('/.well-known/pki-validation/E6FE7FC5B510F05015C6F8BEC821E3A6.txt', (req, res) => {
+//   res.sendFile('/home/ec2-user/backend/src/E6FE7FC5B510F05015C6F8BEC821E3A6.txt')
+// })
+
 const credentials = {
   key,
   cert
@@ -108,6 +108,7 @@ function activitiesController(req, res) {
   }) => res.set(headers).status(statusCode).send(data)).catch(e => res.status(500).end());
 }
 
+app.get('/subscriber', subscriberController);
 app.post('/subscriber/add', subscriberController);
 app.put('/subscriber', subscriberController);
 app.post('/subscriber/update', subscriberController);
